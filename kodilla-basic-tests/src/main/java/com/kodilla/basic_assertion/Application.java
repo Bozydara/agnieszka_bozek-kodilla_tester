@@ -7,8 +7,8 @@ public class Application {
         int a = 5;
         int b = 8;
         int sumResult = calculator.sumNumbers(a, b);
-        int subtractResult = calculator.subtractNumbers(a, b);
-        int squareResult = calculator.squareNumber(a);
+        double subtractResult = calculator.subtractNumbers(a, b);
+        double squareResult = calculator.squareNumber(a);
         boolean correctSum = ResultChecker.assertEquals(13, sumResult);
         boolean correctSubtract = ResultChecker.assertEquals(-3, subtractResult);
         boolean correctSquare = ResultChecker.assertEquals(25, squareResult);

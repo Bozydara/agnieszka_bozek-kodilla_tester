@@ -6,11 +6,11 @@ public class Calculator {
         return a + b;
     }
 
-    public int subtractNumbers(int a, int b) {
+    public double subtractNumbers(double a, double b) {
         return a - b;
     }
 
-    public int squareNumber(int a) {
+    public double squareNumber(double a) {
         return a * a;
     }
 }
