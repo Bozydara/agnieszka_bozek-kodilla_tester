@@ -1,4 +1,4 @@
-package com.kodilla.collectons.interfaces.homework;
+package com.kodilla.collections.interfaces.homework;
 
 public class Toyota implements Car {
     int speed;
