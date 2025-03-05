@@ -4,16 +4,14 @@ public class CashMachine {
 
     private double[] transactions;
     private int size;
-    private double[] deposits;
     private double depositsSum;
     private double withdrawalsSum;
-    private double[] withdrawals;
+    private int deposits;
+    private int withdrawals;
 
     public CashMachine() {
         this.size = 0;
         this.transactions = new double[0];
-        this.deposits = new double[0];
-        this.withdrawals = new double[0];
     }
 
     public void registerTransaction(double amount) {
@@ -46,29 +44,21 @@ public class CashMachine {
     }
 
     public int getDepositsCount() {
-        size = 0;
         for (int i = 0; i < transactions.length; i++) {
             if (transactions[i] > 0) {
-                size++;
-                double[] depositsTable = new double[size];
-                depositsTable[size - 1] = transactions[i];
-                this.deposits = depositsTable;
+                deposits++;
             }
         }
-        return this.deposits.length;
+        return deposits;
     }
 
     public int getWithdrawalsCount() {
-        size = 0;
         for (int i = 0; i < this.transactions.length; i++) {
             if (transactions[i] < 0) {
-                size++;
-                double[] withdrawalsTable = new double[size];
-                withdrawalsTable[size - 1] = transactions[i];
-                this.withdrawals = withdrawalsTable;
+                withdrawals++;
             }
         }
-        return this.withdrawals.length;
+        return withdrawals;
     }
 
     public double getDepositsSum() {
