@@ -2,29 +2,21 @@ package com.kodilla.optional.homework;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ApplicationTest {
 
     @Test
-    public void shouldDisplayStudentAndTeacherNames() {
-        List<Student> students = new ArrayList<>();
-        students.add(new Student("Alexis Ventura", new Teacher("Mark Ponce")));
-        students.add(new Student("Cayson McDonald", new Teacher("Zion Sims")));
-        students.add(new Student("Matthew Jackson", new Teacher("Felipe Dorsey")));
+    public void shouldReturnTeacherNameOrUndefinedIfTeacherIsNull() {
 
-        Application.displayStudentAndTeacherNames(students);
-    }
+        Student student1 = new Student("Alexis Ventura", new Teacher("Mark Ponce"));
+        Student student2 = new Student("Niko Stark", null);
+        Student student3 = new Student("Kamilah Robinson", null);
+        Student student4 = new Student("Cayson McDonald", new Teacher("Zion Sims"));
 
-    @Test
-    public void shouldDisplayStudentNameAndUndefinedIfTeacherIsNull() {
-        List<Student> students = new ArrayList<>();
-        students.add(new Student("Josue George", null));
-        students.add(new Student("Niko Stark", null));
-        students.add(new Student("Kamilah Robinson", null));
-        students.add(new Student("Cruz Vazquez", null));
-
-        Application.displayStudentAndTeacherNames(students);
+        assertEquals("Mark Ponce", student1.getTeacher().getName());
+        assertEquals("<undefined>", student2.getTeacher().getName());
+        assertEquals("<undefined>", student3.getTeacher().getName());
+        assertEquals("Zion Sims", student4.getTeacher().getName());
     }
 }
