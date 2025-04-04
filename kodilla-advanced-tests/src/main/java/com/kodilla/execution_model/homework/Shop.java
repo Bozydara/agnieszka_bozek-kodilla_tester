@@ -1,5 +1,6 @@
 package com.kodilla.execution_model.homework;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class Shop {
@@ -20,13 +21,14 @@ public class Shop {
         return ordersInPriceRange;
     }
 
-    public List<Order> getOrdersWithinDateRange(int startDate, int endDate) {
+    public List<Order> getOrdersWithinDateRange(LocalDate startDate, LocalDate endDate) {
 
         List<Order> ordersInDateRange = new ArrayList<>();
 
         for (Order o : orders) {
-            int orderDate = o.getDate();
-            if (orderDate >= startDate && orderDate <= endDate) {
+            LocalDate orderDate = o.getDate();
+            if (orderDate.isAfter(startDate) && orderDate.isBefore(endDate) || orderDate.isEqual(startDate)
+                    || orderDate.isEqual(endDate)) {
                 ordersInDateRange.add(o);
             }
         }

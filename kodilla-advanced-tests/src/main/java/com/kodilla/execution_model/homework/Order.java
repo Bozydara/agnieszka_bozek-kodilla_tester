@@ -1,17 +1,19 @@
 package com.kodilla.execution_model.homework;
 
+import java.time.LocalDate;
+
 public class Order {
     double price;
-    int date;
+    LocalDate date;
     String login;
 
-    public Order(double price, int date, String login) {
+    public Order(double price, int year, int month, int day, String login) {
         this.price = price;
-        this.date = date;
+        this.date = LocalDate.of(year, month, day);
         this.login = login;
     }
 
-    public int getDate() {
+    public LocalDate getDate() {
         return date;
     }
 

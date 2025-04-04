@@ -3,6 +3,7 @@ package com.kodilla.execution_model.homework;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -12,15 +13,15 @@ public class ShopTestSuite {
 
     Shop shop = new Shop();
 
-    Order order1 = new Order(43.28, 20250328, "fre567");
-    Order order2 = new Order(500.01, 20241228, "baw213");
-    Order order3 = new Order(415.06, 20250202, "uok567");
-    Order order4 = new Order(16.35, 20240912, "itr897");
-    Order order5 = new Order(200, 20250128, "ret432");
-    Order order6 = new Order(17.68, 20250208, "lou794");
-    Order order7 = new Order(25.32, 20250320, "ari999");
-    Order order8 = new Order(1.00, 20250304, "aho137");
-    Order order9 = new Order(35.50, 20250311, "ver512");
+    Order order1 = new Order(43.28, 2025, 3,28, "fre567");
+    Order order2 = new Order(500.01, 2024,12,28, "baw213");
+    Order order3 = new Order(415.06, 2025,2,2, "uok567");
+    Order order4 = new Order(16.35, 2024,9,12, "itr897");
+    Order order5 = new Order(200, 2025,1,28, "ret432");
+    Order order6 = new Order(17.68, 2025,2,8, "lou794");
+    Order order7 = new Order(25.32, 2025,3,20, "ari999");
+    Order order8 = new Order(1.00, 2025,3,4, "aho137");
+    Order order9 = new Order(35.50, 2025,3,11, "ver512");
 
     @BeforeEach
     public void createOrdersList() {
@@ -39,7 +40,7 @@ public class ShopTestSuite {
     @Test
     public void shouldAddNewOrder() {
 
-        shop.addOrder(new Order(43.28, 20250313, "aki945"));
+        shop.addOrder(new Order(43.28, 2025,03,13, "aki945"));
         assertEquals(10, shop.getSize());
     }
 
@@ -47,7 +48,9 @@ public class ShopTestSuite {
     public void shouldReturnOrdersForSpecificDateRange() {
 
         List<Order> expectedList = new ArrayList<>();
-        List<Order> actualList = shop.getOrdersWithinDateRange(20250304, 20250331);
+        LocalDate startDate = LocalDate.of(2025,03,04);
+        LocalDate endDate = LocalDate.of(2025,03,31);
+        List<Order> actualList = shop.getOrdersWithinDateRange(startDate, endDate);
 
         expectedList.add(order1);
         expectedList.add(order7);
