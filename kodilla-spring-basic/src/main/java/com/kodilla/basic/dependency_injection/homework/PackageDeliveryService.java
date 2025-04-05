@@ -10,7 +10,7 @@ public class PackageDeliveryService implements DeliveryService {
     }
 
     @Override
-    public boolean deliver(String address, double weight) {
+    public boolean deliver() {
         if (weight > 30) {
             System.out.println("Package too heavy");
             return false;
