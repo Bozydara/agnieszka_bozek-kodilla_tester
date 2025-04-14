@@ -3,7 +3,6 @@ package com.kodilla.basic.spring_configuration.homework;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.time.LocalTime;
 import java.util.Random;
 
 @Configuration
@@ -12,31 +11,40 @@ public class CarFactory {
     @Bean
     public Car getCarTypeAccordingToTheSeasonAndCheckLights() {
         Car car;
-        boolean areLightsOn;
-        Random generator = new Random();
-        int season = generator.nextInt(4);
 
-        if (season == 0 || season == 1) {
-            car = new Sedan();
-        } else if (season == 2) {
+        String season = calculateSeason();
+
+        if (season.equals("summer")) {
             car = new Cabrio();
-        } else car = new Suv();
-
-        int hour = generator.nextInt(24);
-        int minute = generator.nextInt(61);
-
-        LocalTime randomTime = LocalTime.of(hour, minute);
-
-        if (randomTime.equals(LocalTime.of(06, 00)) || randomTime.isAfter(LocalTime.of(06, 00))
-                && randomTime.isBefore(LocalTime.of(20, 00))) {
-            {
-                areLightsOn = !car.hasHeadlightsTurnedOn();
-                System.out.println("Are the lights on?: " + areLightsOn);
-            }
+        } else if (season.equals("winter")) {
+            car = new Suv();
         } else {
-            areLightsOn = car.hasHeadlightsTurnedOn();
-            System.out.println("Are the lights on?: " + areLightsOn);
+            car = new Sedan();
         }
+
+        System.out.println("Are the lights on?: " + car.hasHeadlightsTurnedOn());
+
         return car;
+    }
+
+    private String calculateSeason() {
+
+        Random generator = new Random();
+        int month = generator.nextInt(12) + 1;
+        int day = switch (month) {
+            case 2 -> generator.nextInt(29) + 1;
+            case 4, 6, 9, 11 -> generator.nextInt(30) + 1;
+            default -> generator.nextInt(31) + 1;
+        };
+
+        if (month == 12 && day >= 22 || month <= 3 && day <= 20) {
+            return "winter";
+        } else if (month == 3 && day >= 21 || month <= 6 && day <= 21) {
+            return "spring";
+        } else if (month == 6 && day >= 22 || month <= 9 && day <= 22) {
+            return "summer";
+        } else {
+            return "autumn";
+        }
     }
 }

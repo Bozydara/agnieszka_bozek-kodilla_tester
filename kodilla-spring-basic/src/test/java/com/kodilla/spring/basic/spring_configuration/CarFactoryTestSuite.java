@@ -17,7 +17,7 @@ public class CarFactoryTestSuite {
     public void shouldReturnCarTypeForParticularSeasonAndCheckIfLightsOn() {
         //Given
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext("com.kodilla.basic");
-        Car car = (Car) applicationContext.getBean("getCarTypeAccordingToTheSeason");
+        Car car = (Car) applicationContext.getBean("getCarTypeAccordingToTheSeasonAndCheckLights");
         //When
         String carType = car.getCarType();
         //Then
