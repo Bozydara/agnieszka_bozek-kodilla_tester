@@ -3,7 +3,7 @@ package com.kodilla.basic.spring_configuration.homework;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Random;
+import java.time.LocalDate;
 
 @Configuration
 public class CarFactory {
@@ -29,19 +29,14 @@ public class CarFactory {
 
     private String calculateSeason() {
 
-        Random generator = new Random();
-        int month = generator.nextInt(12) + 1;
-        int day = switch (month) {
-            case 2 -> generator.nextInt(29) + 1;
-            case 4, 6, 9, 11 -> generator.nextInt(30) + 1;
-            default -> generator.nextInt(31) + 1;
-        };
+        int currentMonth = LocalDate.now().getMonthValue();
+        int currentDay = LocalDate.now().getDayOfMonth();
 
-        if (month == 12 && day >= 22 || month <= 3 && day <= 20) {
+        if (currentMonth == 12 && currentDay >= 22 || currentMonth <= 3 && currentDay <= 20) {
             return "winter";
-        } else if (month == 3 && day >= 21 || month <= 6 && day <= 21) {
+        } else if (currentMonth == 3 && currentDay >= 21 || currentMonth <= 6 && currentDay <= 21) {
             return "spring";
-        } else if (month == 6 && day >= 22 || month <= 9 && day <= 22) {
+        } else if (currentMonth == 6 && currentDay >= 22 || currentMonth <= 9 && currentDay <= 22) {
             return "summer";
         } else {
             return "autumn";
