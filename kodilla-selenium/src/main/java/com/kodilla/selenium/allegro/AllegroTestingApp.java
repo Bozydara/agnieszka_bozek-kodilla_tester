@@ -5,7 +5,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.List;
 
 public class AllegroTestingApp {
     public static void main(String[] args) {
@@ -30,14 +34,24 @@ public class AllegroTestingApp {
         // Alternative search on ebay that can be executed
         driver.get("https://www.ebay.com/");
 
-        WebElement categoryDropdownEbay = driver.findElement(By.xpath("//*[@class=\"gh-search-categories\"]"));
+        WebElement categoryDropdownEbay = driver.findElement(By.className("gh-search-categories"));
         Select categorySelectEbay = new Select(categoryDropdownEbay);
         categorySelectEbay.selectByVisibleText("Consumer Electronics");
 
-        WebElement inputFieldEbay = driver.findElement(By.xpath("//*[@id=\"gh-ac\"]"));
+        WebElement inputFieldEbay = driver.findElement(By.id("gh-ac"));
         inputFieldEbay.sendKeys("Mavic mini");
 
-        WebElement searchButtonEbay = driver.findElement(By.xpath("//*[@id=\"gh-search-btn\"]"));
+        WebElement searchButtonEbay = driver.findElement(By.cssSelector("#gh-search-btn"));
         searchButtonEbay.click();
+
+        List<WebElement> searchResults = driver.findElements(By.cssSelector("#srp-river-results > ul > li > .s-item__wrapper"));
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        wait.until(ExpectedConditions.visibilityOf(searchResults.getFirst()));
+
+        List<WebElement> productTitles = driver.findElements(By.cssSelector("#srp-river-results > ul > li > .s-item__wrapper > .s-item__info > a > .s-item__title > span"));
+        for (WebElement productTitle : productTitles) {
+            System.out.println(productTitle.getText());
+        }
+        driver.close();
     }
 }
