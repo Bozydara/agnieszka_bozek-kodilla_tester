@@ -11,4 +11,3 @@ include 'soapui-tests'
 include 'kodilla-selenium'
 include 'kodilla-login-selenium'
 include 'kodilla-cucumber'
-
