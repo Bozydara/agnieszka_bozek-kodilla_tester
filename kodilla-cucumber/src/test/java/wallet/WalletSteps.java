@@ -3,6 +3,7 @@ package wallet;
 import com.kodilla.wallet.CashSlot;
 import com.kodilla.wallet.Cashier;
 import com.kodilla.wallet.Wallet;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -13,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class WalletSteps {
     private final Wallet wallet = new Wallet();
     private final CashSlot cashSlot = new CashSlot();
+    private final Cashier cashier = new Cashier(cashSlot);
 
     @Given("I have deposited $200 in my wallet")
     public void i_have_deposited_$200_in_my_wallet() {
@@ -22,7 +24,6 @@ public class WalletSteps {
 
     @When("I request $30")
     public void i_request_$30() {
-        Cashier cashier = new Cashier(cashSlot);
         cashier.withdraw(wallet, 30);
     }
 
@@ -31,54 +32,59 @@ public class WalletSteps {
         assertEquals(30, cashSlot.getContents());
     }
 
-    @Given("I have deposited $20 in my wallet")
-    public void i_have_deposited_$20_in_my_wallet() {
-        wallet.deposit(20);
-        assertEquals(20, wallet.getBalance());
+    @And("the balance of my wallet should be $170")
+    public void the_balance_of_my_wallet_should_be_$170() {
+        assertEquals(170, wallet.getBalance());
     }
 
-    @When("I request $40")
-    public void i_request_$40() {
-        Cashier cashier = new Cashier(cashSlot);
-        cashier.withdraw(wallet, 40);
+    @Given("there is $100 in my wallet")
+    public void there_is_$100_in_my_wallet() {
+        wallet.deposit(100);
     }
 
-    @Then("$20 should be dispensed")
-    public void $20_should_be_dispensed() {
-        assertEquals(20, cashSlot.getContents());
+    @When("I check the balance of my wallet")
+    public void i_check_the_balance_of_my_wallet() {
+        assertEquals(100, wallet.getBalance());
     }
 
-    @Given("I have deposited $0 in my wallet")
-    public void i_have_deposited_$0_in_my_wallet() {
-        wallet.deposit(0);
-        assertEquals(0, wallet.getBalance());
+    @Then("I should see that the balance is $100")
+    public void i_should_see_that_the_balance_is_$100() {
+        assertEquals(100, wallet.getBalance());
     }
 
-    @When("I request $100")
-    public void i_request_$100() {
-        Cashier cashier = new Cashier(cashSlot);
-        cashier.withdraw(wallet, 100);
+    @When("I withdraw $200")
+    public void i_withdraw_$200() {
+        cashier.withdraw(wallet, 200);
     }
 
-    @Then("$0 should be dispensed")
-    public void $0_should_be_dispensed() {
+    @Then("nothing should be dispensed")
+    public void nothing_should_be_dispensed() {
         assertEquals(0, cashSlot.getContents());
     }
 
-    @Given("I have deposited $15 in my wallet")
-    public void i_have_deposited_$15_in_my_wallet() {
-        wallet.deposit(15);
-        assertEquals(15, wallet.getBalance());
+    @And("I should be informed {string}")
+    public void i_should_be_informed_that_i_dont_have_enough_money_in_my_wallet(String message) {
+        assertEquals("You don't have enough money in your wallet!", message);
     }
 
-    @When("I request $15")
-    public void i_request_$15() {
-        Cashier cashier = new Cashier(cashSlot);
-        cashier.withdraw(wallet, 15);
+    @Given("I check the balance")
+    public void i_check_the_balance() {
+        assertEquals(0, wallet.getBalance());
     }
 
-    @Then("$15 should be dispensed")
-    public void $15_should_be_dispensed() {
-        assertEquals(15, cashSlot.getContents());
+    @When("I deposit CHF 500 in my wallet")
+    public void i_deposit_CHF_500_in_my_wallet() {
+        wallet.checkCurrency("CHF");
+    }
+
+    @Then("nothing should be deposited")
+    public void nothing_should_be_deposited() {
+
+        assertEquals(0, wallet.getBalance());
+    }
+
+    @And("I should be noticed {string}")
+    public void i_should_be_noticed(String message) {
+        assertEquals("Unfortunately, you cannot deposit money in this currency!", message);
     }
 }
