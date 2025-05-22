@@ -7,18 +7,14 @@ public class Cashier {
         this.cashSlot = cashSlot;
     }
 
-    public void withdraw(Wallet wallet, int amount) {
+    public String withdraw(Wallet wallet, int amount) {
         wallet.debit(amount);
 
         if (amount > wallet.getBalance()) {
-            getNotEnoughMoneyMessage();
+          return "You don't have enough money in your wallet!";
         } else {
             cashSlot.dispense(amount);
+            return "Money dispensed";
         }
-    }
-
-    private String getNotEnoughMoneyMessage() {
-        return "You don't have enough money in your wallet!";
-
     }
 }

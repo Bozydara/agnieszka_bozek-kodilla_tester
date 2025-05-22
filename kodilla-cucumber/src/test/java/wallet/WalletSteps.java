@@ -15,6 +15,7 @@ public class WalletSteps {
     private final Wallet wallet = new Wallet();
     private final CashSlot cashSlot = new CashSlot();
     private final Cashier cashier = new Cashier(cashSlot);
+    private String message;
 
     @Given("I have deposited $200 in my wallet")
     public void i_have_deposited_$200_in_my_wallet() {
@@ -54,7 +55,7 @@ public class WalletSteps {
 
     @When("I withdraw $200")
     public void i_withdraw_$200() {
-        cashier.withdraw(wallet, 200);
+        this.message = cashier.withdraw(wallet, 200);
     }
 
     @Then("nothing should be dispensed")
@@ -62,9 +63,9 @@ public class WalletSteps {
         assertEquals(0, cashSlot.getContents());
     }
 
-    @And("I should be informed {string}")
-    public void i_should_be_informed_that_i_dont_have_enough_money_in_my_wallet(String message) {
-        assertEquals("You don't have enough money in your wallet!", message);
+    @And("I should be informed about not enough money")
+    public void i_should_be_informed_about_not_enough_money() {
+        assertEquals("You don't have enough money in your wallet!", this.message);
     }
 
     @Given("I check the balance")
@@ -74,17 +75,16 @@ public class WalletSteps {
 
     @When("I deposit CHF 500 in my wallet")
     public void i_deposit_CHF_500_in_my_wallet() {
-        wallet.checkCurrency("CHF");
+        this.message = wallet.checkCurrency("CHF");
     }
 
     @Then("nothing should be deposited")
     public void nothing_should_be_deposited() {
-
         assertEquals(0, wallet.getBalance());
     }
 
-    @And("I should be noticed {string}")
-    public void i_should_be_noticed(String message) {
-        assertEquals("Unfortunately, you cannot deposit money in this currency!", message);
+    @And("I should be noticed about unacceptable currency")
+    public void i_should_be_noticed_about_unacceptable_currency() {
+        assertEquals("Unfortunately, you cannot deposit money in this currency!", this.message);
     }
 }
